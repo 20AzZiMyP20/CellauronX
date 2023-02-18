@@ -10,13 +10,13 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/main.js":
-/*!*********************!*\
-  !*** ./src/main.js ***!
-  \*********************/
+/***/ "./src/preload.js":
+/*!************************!*\
+  !*** ./src/preload.js ***!
+  \************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\nconst {\n  app,\n  BrowserWindow,\n  ipcMain\n} = require(\"electron\");\nconst path = require(\"path\");\nconst createWindow = function () {\n  const window = new BrowserWindow({\n    width: 800,\n    height: 600,\n    useContentSize: true,\n    center: true,\n    webPreferences: {\n      preload: path.resolve(__dirname, \"./preload.js\"),\n      nodeIntegration: true\n    }\n  });\n  window.on(\"will-resize\", event => {\n    const [widthContent, heightContent] = window.getContentSize();\n    window.webContents.send(\"WINDOW_RESIZE\", widthContent, heightContent);\n  });\n  window.on(\"maximize\", event => {\n    const [widthContent, heightContent] = window.getContentSize();\n    console.log(\"fullscreened\");\n    window.webContents.send(\"WINDOW_RESIZE\", widthContent, heightContent);\n  });\n  window.on(\"minimize\", event => {\n    const [widthContent, heightContent] = window.getContentSize();\n    window.webContents.send(\"WINDOW_RESIZE\", widthContent, heightContent);\n  });\n  window.loadFile(\"./index.html\");\n};\napp.on(\"ready\", createWindow);\n\n//# sourceURL=webpack://cellauron/./src/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst {\n  contextBridge,\n  ipcRenderer\n} = require(\"electron\");\ncontextBridge.exposeInMainWorld(\"api\", {\n  on: (...args) => ipcRenderer.on(...args)\n});\n\n//# sourceURL=webpack://cellauron/./src/preload.js?");
 
 /***/ })
 
@@ -43,7 +43,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nconst {\n  app,\n  BrowserWin
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
 /******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/main.js"](0, __webpack_exports__, __webpack_require__);
+/******/ 	__webpack_modules__["./src/preload.js"](0, __webpack_exports__, __webpack_require__);
 /******/ 	
 /******/ })()
 ;

@@ -4,8 +4,8 @@
   "description": "",
   "main": "./app/main.js",
   "scripts": {
-    "build:dev": "webpack --config ./webpack.main.js && webpack --config ./webpack.renderer.js",
-    "build:rel": "webpack --config ./webpack.main.js --mode=production && webpack --config ./webpack.renderer.js --mode=production",
+    "build:dev": "webpack --config ./webpack.preload.js && webpack --config ./webpack.main.js && webpack --config ./webpack.renderer.js",
+    "build:rel": "webpack --config ./webpack.preload.js --mode=production && webpack --config ./webpack.main.js --mode=production && webpack --config ./webpack.renderer.js --mode=production",
     "pack:win32": "npm run build:rel && electron-packager ./app Cellauron --platform=win32 --out=./built --overwrite",
     "pack:win64": "npm run build:rel && electron-packager ./app Cellauron --platform=win32 --arch=x64 --out=./built --overwrite",
     "dev": "npm run build:dev && electron ./app/main.js"
@@ -15,16 +15,21 @@
     "url": "git+https://github.com/20AzZiMyP20/Cellauron.git"
   },
   "author": "Oleksandr Borysiuk",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/20AzZiMyP20/Cellauron/issues"
   },
   "homepage": "https://github.com/20AzZiMyP20/Cellauron#readme",
   "type": "module",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.2",
+    "css-loader": "^6.7.3",
     "electron": "^23.0.0",
     "express": "^4.18.2",
-    "react": "^18.2.0"
+    "pixi.js": "^7.1.2",
+    "react": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "style-loader": "^3.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

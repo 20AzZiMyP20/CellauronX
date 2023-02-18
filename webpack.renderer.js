@@ -13,13 +13,19 @@ export default {
     module: {
         rules: [
             {
+                test: /\.css?$/,
+                exclude: /(node_modules)/,
+                use: ["style-loader", "css-loader"],
+            },
+            {
                 test: /\.jsx?$/,
                 exclude: /(node_modules)/,
                 loader: "babel-loader",
                 options: {
                     presets: ["@babel/preset-react"],
                 }
-            }
+            },
+
         ],
     },
 }

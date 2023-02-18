@@ -1,8 +1,9 @@
 import React from "react";
+import Stage from "./components/Stage.jsx";
 
 function App(...props) {
     return (
-        <h2>Hello World!</h2>
+        <Stage/>
     );
 }
 
