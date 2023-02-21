@@ -1,15 +1,15 @@
 import { Container } from "pixi.js";
 import StageListeners from "../../../events/StageListeners.js";
-import { store } from "../../../store/pixi.js";
-
-const VIEWPORT = store.getState().viewport;
+import { viewportGetSize } from "../../../store/actions/viewportAction.js";
 
 class Stage extends Container {
     constructor() {
         super();
         
-        this.x = VIEWPORT.size.width / 2;
-        this.y = VIEWPORT.size.height / 2;
+        const viewportSize = viewportGetSize();
+
+        this.x = viewportSize.width / 2;
+        this.y = viewportSize.height / 2;
 
         this.sortableChildren = true;
         this.interactive = true;

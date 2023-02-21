@@ -1,7 +1,10 @@
-import { EngineEmitter } from "./EngineEmitter.js";
+import { Renderer } from "pixi.js";
+import { StageEmitter } from "./StageEmitter.js";
 import CreateEventListener from "./CreateEventListener.js";
 import { grid } from "../services/renderer/components/Grid.js";
-import { store } from "../store/pixi.js";
+import { viewportGetState, viewportSetSize } from "../store/actions/viewportAction.js";
+import { EngineEmitter } from "./EngineEmitter.js";
+
 
 const EngineListeners = new CreateEventListener();
 
@@ -12,12 +15,28 @@ EngineListeners.add(
         });
     },
     function () {
-        window.api.on("WINDOW_RESIZE", (event, width, height) => {
+        addEventListener("resize", (event) => {
+            const width = innerWidth;
+            const height = innerHeight;
+
             this.renderer.resize(width, height);
             
-            store.dispatch({type: "viewport/set-size", payload: {width, height}});
+            viewportSetSize({width, height});
 
             //EngineEmitter.emit("windowresize", {width, height});
+        });
+    },
+    function () {
+        const {size: viewportSize, color: viewportColor} = viewportGetState();
+
+        StageEmitter.on("stageload", (stage) => {
+            this.renderer = new Renderer({
+                width: viewportSize.width,
+                height: viewportSize.height,
+                backgroundColor: viewportColor,
+                view: stage.current,
+            });
+
         });
     }
 );

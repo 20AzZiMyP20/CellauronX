@@ -16,7 +16,7 @@
   \************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\nconst {\n  contextBridge,\n  ipcRenderer\n} = require(\"electron\");\ncontextBridge.exposeInMainWorld(\"api\", {\n  on: (...args) => ipcRenderer.on(...args)\n});\n\n//# sourceURL=webpack://cellauron/./src/preload.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst {\n  contextBridge,\n  ipcRenderer\n} = require(\"electron\");\ncontextBridge.exposeInMainWorld(\"api\", {\n  on: (...args) => ipcRenderer.on(...args),\n  send: (...args) => ipcRenderer.send(...args)\n});\n\n//# sourceURL=webpack://cellauron/./src/preload.js?");
 
 /***/ })
 

@@ -2,7 +2,7 @@ import Cell from "../services/renderer/components/Cell.js";
 import { engine } from "../services/renderer/Engine.js";
 import CreateEventListener from "./CreateEventListener.js";
 import { EngineEmitter } from "./EngineEmitter.js";
-import EngineListeners from "./EngineListeners.js";
+import { StageEmitter } from "./StageEmitter.js";
 
 const ConwayControllerListener = new CreateEventListener();
 
@@ -19,7 +19,7 @@ ConwayControllerListener.add(
         });
     },
     function () {
-        EngineEmitter.on("stageload", (stage) => {
+        StageEmitter.on("stageload", (stage) => {
             engine.start();
         });
     }

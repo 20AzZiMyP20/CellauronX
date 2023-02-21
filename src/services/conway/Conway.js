@@ -1,42 +1,13 @@
 import ConwayListener from "../../events/ConwayListener.js";
-import PixiObserver from "../../store/observers/PixiObserver.js";
 import { PhantomCell } from "../renderer/components/PhantomCell.js";
 import { conwayController } from "./ConwayController.js";
-
-let CONWAY;
-PixiObserver.subscribe(state => state.conway, conway => CONWAY = conway);
 
 class Conway {
     constructor() {
         this.cells = new Set();
         this.alives = new Set();
-        this.status = "paused";
 
         ConwayListener.init(this);
-
-        /////---TEST
-        let id;
-        addEventListener("keydown", (event) => {
-            
-            switch (event.code) {
-                case "Space":
-                    if (this.status === "paused") {
-                        id = setInterval(() => this.step(), CONWAY.speed);
-                        this.status = "plays";
-                        break;
-                    }
-
-                    if (this.status === "plays") {
-                        clearInterval(id);
-                        this.status = "paused";
-                    }
-
-            
-                default:
-                    break;
-            }
-        });
-        /////----TEST
     }
 
     getNeightCoords(x, y) {

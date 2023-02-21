@@ -1,14 +1,12 @@
-import { Graphics } from 'pixi.js';
-import React, { useContext, useEffect, useRef } from 'react'
-import { EngineEmitter } from '../../events/EngineEmitter.js';
-import Conway from '../../services/conway/Conway.js';
+import React, { useEffect, useRef } from 'react'
+import { StageEmitter } from '../../events/StageEmitter.js';
 import { conwayController } from '../../services/conway/ConwayController.js';
 
 export default function Stage() {
     const self = useRef();
 
     const start = () => {
-        EngineEmitter.emit("stageload", self);
+        StageEmitter.emit("stageload", self);
 
         conwayController.birthCell(0, 0);
     };

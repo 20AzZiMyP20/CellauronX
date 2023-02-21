@@ -1,38 +1,28 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 
-const createWindow = function () {
+const start = function () {
     const window = new BrowserWindow({
         width: 800,
         height: 600,
+        minWidth: 400,
+        minHeight: 300,
+        frame: false,
+        acceptFirstMouse: true,
         useContentSize: true,
         center: true,
         webPreferences: {
-            preload:  path.resolve(__dirname, "./preload.js"),
+            preload: path.resolve(__dirname, "./preload.js"),
             nodeIntegration: true,
+            contextIsolation: true,
         },
     });
 
-    window.on("will-resize", (event) => {
-        const [ widthContent, heightContent ] = window.getContentSize();
-
-        window.webContents.send("WINDOW_RESIZE", widthContent, heightContent);
-    });
-
-    window.on("maximize", (event) => {
-        const [widthContent, heightContent] = window.getContentSize();
-        console.log("fullscreened")
-
-        window.webContents.send("WINDOW_RESIZE", widthContent, heightContent);
-    });
-
-    window.on("minimize", (event) => {
-        const [widthContent, heightContent] = window.getContentSize();
-
-        window.webContents.send("WINDOW_RESIZE", widthContent, heightContent);
-    });
+    ipcMain.on("collapse", () => window.isMinimized() ? window.restore() : window.minimize());
+    ipcMain.on("expand", () => window.isMaximized() ? window.restore() : window.maximize());
+    ipcMain.on("close", () => window.close());
 
     window.loadFile("./index.html");
 };
 
-app.on("ready", createWindow);
+app.on("ready", start);

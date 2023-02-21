@@ -1,29 +1,14 @@
-import { Renderer, Ticker } from "pixi.js";
-import { EngineEmitter } from "../../events/EngineEmitter.js";
+import { Ticker } from "pixi.js";
 import EngineListeners from "../../events/EngineListeners.js";
-import { store } from "../../store/pixi.js";
 import Cell from "../../services/renderer/components/Cell.js";
 import { grid } from "../../services/renderer/components/Grid.js";
+import { cellGetColor, cellGetSize } from "../../store/actions/cellAction.js";
 import { stage } from "./components/Stage.js";
-import PixiObserver from "../../store/observers/PixiObserver.js";
-
-const VIEWPORT = store.getState().viewport;
-let CELL;
-PixiObserver.subscribe(state => state.cell, cell => CELL = cell);
 
 class Engine {
     constructor() {
         this.ticker = new Ticker();
         this.cells = new Map();
-        
-        EngineEmitter.on("stageload", (stage) => {
-            this.renderer = new Renderer({
-                width: VIEWPORT.size.width,
-                height: VIEWPORT.size.height,
-                backgroundColor: VIEWPORT.color,
-                view: stage.current,
-            });
-        });
 
         EngineListeners.init(this);
 
@@ -31,6 +16,7 @@ class Engine {
 
     start() {
         const { renderer, ticker } = this;
+        console.log(renderer)
         
         const render = () => renderer.render(stage);
         ticker.add(render);
@@ -38,7 +24,8 @@ class Engine {
     }
 
     drawCell(x, y) {
-        const { size: cellSize, color: cellColor } = CELL; 
+        const cellSize = cellGetSize();
+        const cellColor = cellGetColor();
 
         if (this.cells.has(Cell.key({x, y}))) return;
 
@@ -84,6 +71,14 @@ class Engine {
 
     disableGrid() {
         stage.removeChild(grid);
+    }
+
+    setPointerCapture(pointerId) {
+        return this.renderer.view.setPointerCapture(pointerId);
+    }
+
+    releasePointerCapture(pointerId) {
+        return this.renderer.view.releasePointerCapture(pointerId);
     }
 }
 

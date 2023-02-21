@@ -1,33 +1,38 @@
-import { store } from "../store/pixi.js";
 import CreateEventListener from "./CreateEventListener.js";
 import { stage } from "../services/renderer/components/Stage.js";
-import { EngineEmitter } from "./EngineEmitter.js";
-import { Rectangle } from "pixi.js";
-import PixiObserver from "../store/observers/PixiObserver.js";
-
-let CELL;
-PixiObserver.subscribe(state => state.cell, cell => CELL = cell);
+import { cellGetSize } from "../store/actions/cellAction.js";
+import { viewportGetSize } from "../store/actions/viewportAction.js";
 
 const GridListeners = new CreateEventListener();
 
 GridListeners.add(
     function () {
-        this.on("click", (event) => {
+        let isClicked = false;
+
+        const click = (event) => {
+            const cellSize = cellGetSize();
+
             const cell = {
-                x: Math.floor((event.globalX - stage.x) / CELL.size),
-                y: Math.floor((event.globalY - stage.y) / CELL.size),
+                x: Math.floor((event.globalX - stage.x) / cellSize),
+                y: Math.floor((event.globalY - stage.y) / cellSize),
             };
 
             event.cell = cell;
 
             this.emit("clickcell", event);
-        });
+        };
+
+        this.on("pointerdown", () => isClicked = true);
+        this.on("globalpointermove", () => isClicked = false);
+        this.on("click", (event) => isClicked && click(event));
     },
 
     function () {
         stage.on("move", (event) => {
-            const stageOffsetX = (stage.x - event.startStageGlobalX) / CELL.size;
-            const stageOffsetY = (stage.y - event.startStageGlobalY) / CELL.size;
+            const cellSize = cellGetSize();
+
+            const stageOffsetX = (stage.x - event.startStageGlobalX) / cellSize;
+            const stageOffsetY = (stage.y - event.startStageGlobalY) / cellSize;
 
             const selfOffsetX = this.x - this.offset.x;
             const selfOffsetY = this.y - this.offset.y;
@@ -48,14 +53,16 @@ GridListeners.add(
                 this.y += -coefY;
             }
 
-            console.log(coefX)
-
         });
     },
     function () {
         let prevSize = {width: 0, height: 0};
 
-        PixiObserver.subscribe(state => state.viewport, ({size}) => {
+        viewportGetSize((size) => {
+            const cellSize = cellGetSize();
+            const offsetWidth = size.width - prevSize.width;
+            const offsetHeight = size.height - prevSize.height;
+
             const prevX = this.x;
             const prevY = this.y;
 
@@ -65,15 +72,16 @@ GridListeners.add(
             this.offset.y += this.y - prevY;
 
             if(
-                Math.abs(size.width - prevSize.width) >= CELL.size ||
-                Math.abs(size.height - prevSize.height) >= CELL.size 
+                Math.abs(offsetWidth) >= cellSize ||
+                Math.abs(offsetHeight) >= cellSize 
                 ) {
+                
                 this.draw();
                 this.centerBySelf();
                 prevSize = size;
             }
 
-            this.hitArea = new Rectangle(0, 0, size.width + CELL.size, size.height + CELL.size);
+            this.updateHitArea();
 
         }, this);
     }

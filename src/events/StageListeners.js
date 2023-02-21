@@ -1,31 +1,38 @@
+import { grid } from "../services/renderer/components/Grid.js";
+import { engine } from "../services/renderer/Engine.js";
 import CreateEventListener from "./CreateEventListener.js";
 
 const StageListeners = new CreateEventListener();
 
 StageListeners.add(
     function () {
-        let isPointerDown = false;
         const parent = {};
 
-        this.on("pointerdown", (event) => {
-            isPointerDown = true;
+        const move = (event) => {
+            Object.assign(event, parent);
+            this.emit("globalpointermovewhiledown", event);
+        };
+
+        const beginMove = (event) => {
+            engine.setPointerCapture(event.pointerId);
 
             parent.startGlobalX = event.globalX;
             parent.startGlobalY = event.globalY;
             parent.stageGlobalX = this.x;
             parent.stageGlobalY = this.y;
-        });
 
-        this.on("pointerup", () => isPointerDown = false);
-        //this.self.on("pointerout", () => isPointerDown = false);
+            this.on("globalpointermove", move);
+        }
 
-        this.on("globalpointermove", (event) => {
-            if (!isPointerDown) return;
+        const stopMove = (event) => {
+            console.log("pointer up")
+            engine.releasePointerCapture(event.pointerId);
+            this.off("globalpointermove", move);
+        };
 
-            Object.assign(event, parent);
-
-            this.emit("globalpointermovewhiledown", event);
-        });
+        this.on("pointerdown", beginMove);
+        this.on("pointerup", stopMove);
+        this.on("pointerupoutside", stopMove);
     },
 
     function () {

@@ -1,0 +1,14 @@
+.topbar {
+    position: absolute;
+
+    display: flex;
+    justify-content: end;
+
+    width: 100vw;
+    height: 1.5rem;
+
+    background-color: #00a7a2;
+
+    z-index: 2;
+    -webkit-app-region: drag;
+}

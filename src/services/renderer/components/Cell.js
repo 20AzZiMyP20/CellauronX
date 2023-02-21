@@ -1,4 +1,4 @@
-import { Container, Graphics, Sprite, Texture } from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
 
 class Cell extends Sprite{
     static key({x, y}) {

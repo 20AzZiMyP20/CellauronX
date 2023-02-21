@@ -1,9 +1,16 @@
 import React from "react";
 import Stage from "./components/Stage.jsx";
+import Sidebar from "./components/Sidebar.jsx";
+import Topbar from "./components/Topbar.jsx";
 
 function App(...props) {
     return (
-        <Stage/>
+        <div>
+            <Topbar />
+            <Stage />
+            <Sidebar />
+        </div>
+        
     );
 }
 

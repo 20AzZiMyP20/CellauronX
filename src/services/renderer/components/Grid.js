@@ -1,17 +1,10 @@
-import { Container, Geometry, Graphics, Rectangle, Sprite, Texture } from "pixi.js";
+import { Container, Graphics, Rectangle } from "pixi.js";
 import GridListeners from "../../../events/GridListeners.js";
-import { store } from "../../../store/pixi.js";
-import { engine } from "../../../services/renderer/Engine.js";
 import Cell from "./Cell.js";
 import { stage } from "./Stage.js";
-import PixiObserver from "../../../store/observers/PixiObserver.js";
-
-let CELL, GRID, VIEWPORT;
-
-PixiObserver.subscribe((state) => state.cell, (cell) => CELL = cell);
-PixiObserver.subscribe((state) => state.grid, (grid) => GRID = grid);
-PixiObserver.subscribe((state) => state.viewport, (viewport) => VIEWPORT = viewport);
-
+import { cellGetSize } from "../../../store/actions/cellAction.js";
+import { viewportGetSize } from "../../../store/actions/viewportAction.js";
+import { gridGetState } from "../../../store/actions/gridAction.js";
 
 class Grid extends Container {
     constructor() {
@@ -27,24 +20,28 @@ class Grid extends Container {
         
         this.draw();
         this.centerBySelf();
+        this.centerByScreen();
+        this.updateHitArea();
 
         GridListeners.init(this);
     }
 
     centerBySelf() {
         const [ countX, countY ] = this.#getCounts();
+        const cellSize = cellGetSize();
 
-        const anchorX = Math.floor((countX) * 0.5) * CELL.size;
-        const anchorY = Math.floor((countY) * 0.5) * CELL.size;
+        const anchorX = Math.floor((countX) * 0.5) * cellSize;
+        const anchorY = Math.floor((countY) * 0.5) * cellSize;
 
         this.pivot.set(anchorX, anchorY);
     }
 
     centerByScreen() {
         const [countX, countY] = this.#getCounts();
+        const cellSize = cellGetSize();
 
-        this.x = Math.trunc((countX) * 0.5 - (stage.x / CELL.size));
-        this.y = Math.trunc((countY) * 0.5 - (stage.y / CELL.size));
+        this.x = Math.trunc((countX) * 0.5 - (stage.x / cellSize));
+        this.y = Math.trunc((countY) * 0.5 - (stage.y / cellSize));
     }
 
     draw() {
@@ -65,32 +62,50 @@ class Grid extends Container {
         this.addChild(...childrends);
     }
 
+    updateHitArea() {
+        const cellSize = cellGetSize();
+        const viewportSize = viewportGetSize();
+
+        this.hitArea = new Rectangle(-cellSize, -cellSize, viewportSize.width + cellSize, viewportSize.height + cellSize);
+    }
+
     #createCell(x, y) {
+        const cellSize = cellGetSize();
+        const {color: gridColor, width: gridWidth} = gridGetState();
+
         const cell = new Graphics();
-        cell.lineStyle({ color: GRID.color, width: GRID.width });
-        cell.drawRect(x * CELL.size, y * CELL.size, CELL.size, CELL.size);
+        cell.lineStyle({ color: gridColor, width: gridWidth });
+        cell.drawRect(x * cellSize, y * cellSize, cellSize, cellSize);
+
 
         return cell;
     }
 
     #getCounts(){
-        const countY = Math.floor(VIEWPORT.size.height / CELL.size);
-        const countX = Math.floor(VIEWPORT.size.width / CELL.size);
+        const cellSize = cellGetSize();
+        const viewportSize = viewportGetSize();
+
+        const countY = Math.floor(viewportSize.height / cellSize);
+        const countX = Math.floor(viewportSize.width / cellSize);
 
         return [countX, countY];
     }
 
     get x() {
-        return this.position.x / CELL.size;
+        const cellSize = cellGetSize();
+        return this.position.x / cellSize;
     }
     set x(value) {
-        this.position.x = value * CELL.size;
+        const cellSize = cellGetSize();
+        this.position.x = value * cellSize;
     }
     get y() {
-        return this.position.y / CELL.size;
+        const cellSize = cellGetSize();
+        return this.position.y / cellSize;
     }
     set y(value) {
-        this.position.y = value * CELL.size;
+        const cellSize = cellGetSize();
+        this.position.y = value * cellSize;
     }
 }
 
