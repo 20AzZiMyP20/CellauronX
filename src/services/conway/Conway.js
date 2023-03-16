@@ -1,6 +1,8 @@
 import ConwayListener from "../../events/ConwayListener.js";
+import { conwayIncrementStepCount, conwaySetBase } from "../../store/actions/conwayAction.js";
 import { PhantomCell } from "../renderer/components/PhantomCell.js";
 import { conwayController } from "./ConwayController.js";
+import { conwayGenerator } from "./ConwayGenerator.js";
 
 class Conway {
     constructor() {
@@ -64,6 +66,7 @@ class Conway {
         const killNeeded = new Set();
         const neightbours = [];
 
+
         for (const alive of this.alives) {
             const neightCells = this.getNeightCells(alive.x, alive.y);
 
@@ -79,7 +82,8 @@ class Conway {
 
         birthNeeded.forEach(cell => conwayController.birthCell(cell.x, cell.y));
         killNeeded.forEach(cell => conwayController.killCell(cell.x, cell.y));
-
+        conwayIncrementStepCount();
+        //conwayController.cacheStep();
     }
 
 }

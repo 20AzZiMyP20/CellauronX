@@ -1,7 +1,8 @@
 import CreateEventListener from "./CreateEventListener.js";
 import { stage } from "../services/renderer/components/Stage.js";
-import { cellGetSize } from "../store/actions/cellAction.js";
+import { cellGetSize, cellSetSize } from "../store/actions/cellAction.js";
 import { viewportGetSize } from "../store/actions/viewportAction.js";
+import { gridGetColor, gridGetWidth } from "../store/actions/gridAction.js";
 
 const GridListeners = new CreateEventListener();
 
@@ -84,7 +85,24 @@ GridListeners.add(
             this.updateHitArea();
 
         }, this);
-    }
+    },
+    function () {
+        gridGetColor(() => this.draw(), this);
+    },
+
+    function () {
+        gridGetWidth(() => {
+            this.draw();
+        }, this);
+    },
+
+    function () {
+        cellGetSize(() => {
+            this.draw();
+            this.centerBySelf();
+            this.centerByScreen();
+        }, this);
+    },
 );
 
 export default GridListeners;

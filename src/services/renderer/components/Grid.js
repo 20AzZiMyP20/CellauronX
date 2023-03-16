@@ -14,7 +14,6 @@ class Grid extends Container {
         this.y = 0;
         this.offset = {x: 0, y: 0};
 
-        this.cells = new Map();
         this.interactive = true;
         this.zIndex = 1000;
         
@@ -53,13 +52,13 @@ class Grid extends Container {
             for (let x = -2; x < countX + 2; x++) {
                 const cell = this.#createCell(x, y);
 
-                this.cells.set(Cell.key({x, y}), cell);
                 childrends.push(cell);
             }
         }
 
+        this.children.forEach(child => child.destroy({children: true, texture: true, baseTexture: true}));
         this.removeChildren(0);
-        this.addChild(...childrends);
+        childrends.forEach(child => this.addChild(child));
     }
 
     updateHitArea() {
@@ -76,7 +75,6 @@ class Grid extends Container {
         const cell = new Graphics();
         cell.lineStyle({ color: gridColor, width: gridWidth });
         cell.drawRect(x * cellSize, y * cellSize, cellSize, cellSize);
-
 
         return cell;
     }

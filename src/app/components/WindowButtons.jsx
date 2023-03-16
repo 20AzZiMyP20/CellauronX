@@ -10,9 +10,9 @@ export default function WindowButtons() {
 
     return (
         <div ref={self} className={style.wrapper}>
-            <button className={style.collapse} onClick={oncollapse}></button>
-            <button className={style.expand } onClick={onexpand}></button>
-            <button className={style.close} onClick={onclose}></button>
+            <button className={style.collapse} onClick={oncollapse}><ion-icon name="remove-outline"/></button>
+            <button className={style.expand} onClick={onexpand}><ion-icon name="copy-outline" /></button>
+            <button className={style.close} onClick={onclose}><ion-icon name="close-outline" /></button>
         </div>
     )
 }

@@ -4,19 +4,17 @@ import Cell from "../../services/renderer/components/Cell.js";
 import { grid } from "../../services/renderer/components/Grid.js";
 import { cellGetColor, cellGetSize } from "../../store/actions/cellAction.js";
 import { stage } from "./components/Stage.js";
-
+const cellSize = cellGetSize();
 class Engine {
     constructor() {
         this.ticker = new Ticker();
         this.cells = new Map();
-
         EngineListeners.init(this);
 
     }
 
     start() {
         const { renderer, ticker } = this;
-        console.log(renderer)
         
         const render = () => renderer.render(stage);
         ticker.add(render);
@@ -24,7 +22,7 @@ class Engine {
     }
 
     drawCell(x, y) {
-        const cellSize = cellGetSize();
+        
         const cellColor = cellGetColor();
 
         if (this.cells.has(Cell.key({x, y}))) return;

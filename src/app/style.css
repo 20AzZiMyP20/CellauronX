@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Space+Mono&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -22,7 +23,53 @@ body {
     height: 100%;
 }
 
-::-webkit-scrollbar {
-    position: absolute;   
+ion-icon {
+    pointer-events: none;
+    color: inherit;
 }
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--additional-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--main-text-color);
+    border-radius: 1rem;
+}
+
+/* :root {
+    --main-background-color: #ffffff;
+    --additional-background-color: #fafafa;
+    --hover-background-color: #f1f2f3;
+    --main-text-color: #1e1e1e;
+    --main-shadow-color: rgba(0, 0, 0, 0.05);
+    --additional-shadow-color: rgba(0, 0, 0, 0.15);
+
+    --playbutton-background-color: #f1f2f3;
+    --playbutton-main-shadow-color: rgba(0, 0, 0, 0.1);
+    --playbutton-additional-shadow-color: #ffffff;
+
+    --close-hover-background-color: rgb(201, 0, 0);
+    --close-hover-text-color: #ffffff;
+} */
+
+/* :root {
+    --main-background-color: #3e3e3e;
+    --additional-background-color: #2e2e2e;
+    --hover-background-color: #4e4e4e;
+    --main-text-color: #ffffff;
+    --main-shadow-color: rgba(0, 0, 0, 0.15);
+    --additional-shadow-color: rgba(0, 0, 0, 0.25);
+
+    --playbutton-background-color: #4e4e4e;
+    --playbutton-main-shadow-color: rgba(0, 0, 0, 0.15);
+    --playbutton-additional-shadow-color: #3e3e3e;
+
+    --close-hover-background-color: rgb(201, 0, 0);
+    --close-hover-text-color: #ffffff;
+} */
 

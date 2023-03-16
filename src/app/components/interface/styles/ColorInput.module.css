@@ -21,7 +21,6 @@
 }
 
 .title {
-    padding-left: 1.5rem;
 
     height: 100%;
 
@@ -38,4 +37,19 @@
     white-space: nowrap;
 
     user-select: none;
+}
+
+.preview {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+
+    width: 0.8rem;
+    height:0.8rem;
+
+    flex: 1 0 auto;
+
+    border-radius: 0.2rem;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #1e1e1e;
 }

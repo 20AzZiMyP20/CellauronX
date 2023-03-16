@@ -5,73 +5,120 @@
 
     padding-top: 2rem;
 
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    width: 250px;
+    min-width: 270px;
+    max-width: 100vw;
+    width: var(--sidebar-width);
     height: 100vh;
 
-    border-style: solid;
-    border-width: 1px;
-    border-color: #1e1e1e;
-    box-shadow: -2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    background-color: var(--additional-color);
 
-    background-color: rgba(255, 255, 255);
-
-    transition: transform 0.2s ease;
+    transition: background-color 0.2s, transform 0.2s ease;
     z-index: 1;
-}
-
-.sidebar::before {
-    position: absolute;
-    top: 0;
-    left: -25px;
-    content: "";
-
-    height: 100%;
-    width: 25px;
-
-    background-color: #00a7a2;
-
-    border-bottom-left-radius: 1rem;
-    
 }
 
 .sidebar::after {
     position: absolute;
     top: 0;
-    left: -10px;
+    left: 0px;
     content: "";
 
     height: 100%;
-    width: 10px;
+    width: 20px;
 
-    background-color: #ffffff;
+    background-color: var(--main-color);
+    box-shadow: -5px 0 16px var(--additional-shadow-color);
+    border-bottom-left-radius: 1rem;
 
-    border-top-left-radius: 2rem;
-    border-bottom-left-radius: 2rem;
+    transition: background-color 0.2s;
+    
 }
 
 .sidebar[collapse=true] {
-    transform: translate(260px, 0);
+    transform: translate(calc(var(--sidebar-width) - 20px), 0);
+}
+
+.sidebar .container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: 100%;
+    height: calc(100% - 100px);
+
+    background: transparent;
+    overflow-y: overlay;
 }
 
 .toggle {
     position: absolute;
     top: 0;
-    left: -25px;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     height: 100%;
-    width: 15px;
+    width: 20px;
 
-    background-color: transparent;
+    background-color: var(--main-color);
+
+    border-bottom-left-radius: 1rem;
+
+    transition: background-color 0.2s;
 
     cursor: pointer;
-    
-    transition: background-color 0.2s;
+
+    z-index: 3;
+}
+.toggle:hover {
+    background-color: var(--hover-color);
 }
 
-.toggle:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+.toggle > ion-icon {
+    font-size: 2rem;
+    color: var(--main-text-color);
+    transition: 0.2s;
+}
+
+.sidebar[collapse = "false"] .toggle > ion-icon {
+    transform: rotateZ(180deg);
+}
+
+.resizer {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 4px;
+
+    background-color: var(--main-background-color);
+
+    border-bottom-left-radius: 1rem;
+
+    transition: background-color 0.1s;
+
+    cursor: ew-resize;
+
+    z-index: 4;
+}
+
+.resizer:hover {
+    background-color: var(--hover-background-color);
+}
+
+.sidebar[collapse = true ] .resizer {
+    display: none;
+}
+
+.sidebar .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 3rem;
+
+    background-color: var(--main-color);
 }

@@ -1,0 +1,30 @@
+.toggle {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 2.5rem;
+    height: 1.5rem;
+
+    background-color: var(--main-color);
+
+    transition: 0.2s;
+
+    cursor: pointer;
+
+    z-index: 1000;
+
+    -webkit-app-region: none;
+}
+
+.toggle:hover {
+    background-color: var(--hover-color);
+}
+
+.toggle > ion-icon {
+    color: var(--main-text-color);
+    font-size: 1.2rem;
+    --ionicon-stroke-width: 3rem;
+}

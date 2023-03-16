@@ -1,13 +1,28 @@
 import ConwayControllerListener from "../../events/ConwayControllerListener.js";
+import { conwayGetStepCount, conwaySetBase } from "../../store/actions/conwayAction.js";
 import { PhantomCell } from "../renderer/components/PhantomCell.js";
 import { engine } from "../renderer/Engine.js";
 import { conway } from "./Conway.js";
+import { conwayGenerator } from "./ConwayGenerator.js";
 
 
 class ConwayController {
     constructor() {
+        this.cachedSteps = [];
+        this.cacheStep();
+
         engine.enableGrid();
         ConwayControllerListener.init(this);
+    }
+
+    cacheStep() {
+        this.cachedSteps[conwayGetStepCount()] = [new Set(conway.cells), new Set(conway.alives)];
+    }
+
+    loadStep(number) {
+        this.clear();
+
+        this.cachedSteps[number][1].forEach(cell => this.birthCell(cell.x, cell.y));
     }
 
     hasCell(x, y) {
@@ -46,6 +61,9 @@ class ConwayController {
         cells.add(cell);
 
         conway.generatePhantomArea(x, y);
+
+        const base = conwayGenerator.createBase(conway.alives);      
+        conwaySetBase(base);  
     }
 
     killCell(x, y) {
@@ -58,6 +76,13 @@ class ConwayController {
         alives.delete(cell);
         cells.delete(cell);
         cells.add(new PhantomCell(x, y));
+
+        const base = conwayGenerator.createBase(conway.alives);
+        conwaySetBase(base);  
+    }
+
+    clear() {
+        conway.alives.forEach(cell => this.killCell(cell.x, cell.y));
     }
 }
 

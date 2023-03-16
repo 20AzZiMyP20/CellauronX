@@ -1,5 +1,7 @@
 import { grid } from "../services/renderer/components/Grid.js";
 import { engine } from "../services/renderer/Engine.js";
+import { cellGetSize, cellSetSize } from "../store/actions/cellAction.js";
+import { viewportGetSize } from "../store/actions/viewportAction.js";
 import CreateEventListener from "./CreateEventListener.js";
 
 const StageListeners = new CreateEventListener();
@@ -53,6 +55,13 @@ StageListeners.add(
             event.startStageGlobalY = startPosition.globalY;
 
             this.emit("move", event);
+            console.log(this.x, this.y)
+        });
+    },
+    function () {
+        this.on("wheel", (event) => {
+            const cellSize = cellGetSize()
+            cellSetSize(+(cellSize + cellSize * 1 / 300 * event.deltaY).toFixed(2))
         });
     }
 );

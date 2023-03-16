@@ -7,15 +7,14 @@
 .collapse,
 .expand,
 .close {
-    position: absolute;
-    margin-right: 0.5rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 
     width: 2.5rem;
     height: 100%;
 
     background-color: transparent;
-
-    cursor: pointer;
 
     transition: background-color 0.2s;
 
@@ -24,67 +23,24 @@
 
 .collapse:hover,
 .expand:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--hover-color);
 }
 
 .close:hover {
-    background-color: #c5003b;
+    background-color: var(--close-hover-color);
+    color: var(--close-hover-text-color);
 }
 
-.collapse {
-    top: 0;
-    left: -7.5rem;
+.close:hover ion-icon{
+    color: inherit;
 }
 
-.expand {
-    top: 0;
-    left: -5rem;
+.wrapper ion-icon {
+    font-size: 1.2rem;
+    color: var(--main-text-color);
+    --ionicon-stroke-width: 3rem;
 }
 
-.close {
-    top: 0;
-    left: -2.5rem
-}
-
-.collapse::before,
-.expand::before,
-.close::before,
-.close::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    content: "";
-
-    border-radius: 0.15rem;
-
-    background-color: #ffffff;
-}
-
-.collapse::before {
-    width: 40%;
-    height: 0.15rem;
-}
-
-.expand::before {
-    width: 30%;
-    height: 30%;
-
-    border-style: solid;
-    border-color: #ffffff;
-    border-width: 0.15rem;
-
-    background-color: transparent;
-}
-
-.close::before {
-    width: 40%;
-    height: 0.15rem;
-    transform: translate(-50%, -50%) rotateZ(45deg);
-}
-
-.close::after {
-    width: 40%;
-    height: 0.15rem;
-    transform: translate(-50%, -50%) rotateZ(-45deg);
+.wrapper ion-icon[name = "copy-outline"] {
+    transform: rotateZ(90deg) scale(0.75);
 }

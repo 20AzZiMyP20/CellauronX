@@ -10,13 +10,18 @@ ConwayListener.add(
         const pause = () => clearInterval(intervalId);
         const play = (speed) => {
             clearInterval(intervalId);
-            if (speed > 0) intervalId = setInterval(() => this.step(), 1000 / speed);
+            if (speed > 0) {
+                intervalId = setInterval(() => this.step(), 1000 / speed);            
+            }
         }
 
+        let speedUnsubscribe = () => {};
+
         conwayGetStatus(status => {
-            const speed = conwayGetSpeed(speed => status === "plays" ? play(speed) : pause());
-            status === "plays" ? play(speed) : pause();
-        });
+            speedUnsubscribe();
+            conwayGetSpeed(speed => status === "plays" ? play(speed) : pause(), (unsubscribe) => speedUnsubscribe = unsubscribe);
+
+        }, this);
     }
 );
 export default ConwayListener;

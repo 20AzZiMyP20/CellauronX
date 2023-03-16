@@ -8,12 +8,14 @@ export default function PlayButton() {
 
     const onclick = () => {
         dispatch({type: "conway/set-status", payload: status === "paused" ? "plays" : "paused"});
-        console.log(status);
     };
 
     return (
         <div className={style.wrapper}>
-            <button className={status === "paused" ? style.play : style.pause} onClick={onclick}>{status === "paused" ? "Play" : "Pause"}</button>
+            <button className={status === "paused" ? style.play : style.pause} onClick={onclick}>
+                <ion-icon name={status === "paused" ? "play-outline" : "pause-outline"} />
+                <span>{status === "paused" ? "Play" : "Pause"}</span>
+            </button>
         </div>
     )
 }

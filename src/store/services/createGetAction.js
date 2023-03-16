@@ -1,25 +1,32 @@
 import { store } from "../store.js";
 
 export function createGetAction(select) {
-    return function (callback, thisArg) {
-        // const uncallback = rest.find(arg => typeof arg === "function");
-        // const thisArg = rest.find(arg => typeof arg === "object");
+    return function (callback, ...rest) {
+        const uncallback = rest.find(arg => typeof arg === "function");
+        const thisArg = rest.find(arg => typeof arg === "object");
 
-        let currentState;
+        let currentState
+
+        if (typeof callback !== "function") 
+            return select(store.getState());
 
         function handleChange() {
             const nextState = select(store.getState());
 
-            if (nextState !== currentState) {
-                currentState = nextState;
-                if (typeof callback === "function") callback.call(thisArg, currentState);
-            }
+            if (nextState === currentState) 
+                return
+
+            currentState = nextState;
+
+            callback.call(thisArg, currentState);
         }
 
-        const unsubscribe = store.subscribe(handleChange);
+        const unsubscriber = store.subscribe(handleChange);
+        handleChange()
 
-        if (typeof uncallback === "function") uncallback(unsubscribe);
-        handleChange();
+        if (typeof uncallback === "function") {
+            uncallback(unsubscriber);
+        }
 
         return currentState;
     }

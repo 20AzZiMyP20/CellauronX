@@ -1,4 +1,5 @@
 import { Sprite, Texture } from "pixi.js";
+import { cellGetSize, cellGetColor } from "../../../store/actions/cellAction.js";
 
 class Cell extends Sprite{
     static key({x, y}) {
@@ -14,16 +15,39 @@ class Cell extends Sprite{
         this.y = y;
         this.tint = color;
 
+        let prevX = x;
+        let prevY = y;
+
+        cellGetColor(color => this.tint = color);
+        cellGetSize(size => {
+            prevX = this.x;
+            prevY = this.y;
+
+            this.width = size; 
+            this.height = size;
+
+            this.x = prevX;
+            this.y = prevY;
+        });
+
     }
 
+    setColor(color) {
+        this.tint = color;
+    }
+
+    getColor() {
+        this.tint = color;
+    }
+    
     get x() {
-        return this.position.x / this.width;
+        return Math.round(this.position.x / this.width);
     }
     set x(value) {
         this.position.x = value * this.width;
     }
     get y() {
-        return this.position.y / this.height;
+        return Math.round(this.position.y / this.height);
     }
     set y(value) {
         this.position.y = value * this.height;

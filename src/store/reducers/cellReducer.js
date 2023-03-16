@@ -4,7 +4,7 @@ export const cell_setSize = createAction("cell/set-size");
 export const cell_setColor = createAction("cell/set-color");
 
 const preloadState = {
-    color: 0x008580,
+    color: 0x3e3e3e,
     size: 40,
 }
 

@@ -4,7 +4,7 @@ export const grid_setColor = createAction("grid/set-color");
 export const grid_setWidth = createAction("grid/set-width");
 
 const preloadState = {
-    color: 0x00a7a2,
+    color: 0x7e7e7e,
     width: 1,
 };
 
