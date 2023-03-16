@@ -3,4 +3,8 @@ import { createFilterMiddleware } from "../services/createFilterMiddleware.js";
 
 export const gridFilterMiddleware = createFilterMiddleware(
     grid_setWidth, 
-    (action) => Number.isInteger(action.payload) ? action : false);
+    (action) => {
+        if (!Number.isInteger(action.payload)) return;
+        action.payload = Math.min(Math.max(0, action.payload), 10)
+        return action
+    });

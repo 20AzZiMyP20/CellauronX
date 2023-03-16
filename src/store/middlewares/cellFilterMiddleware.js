@@ -5,7 +5,7 @@ export const cellFilterMiddleware = createFilterMiddleware(
     cell_setSize, 
     action => {
         if (typeof action.payload !== "number") return false;
-        action.payload = Math.max(10, action.payload);
+        action.payload = Math.min(Math.max(10, action.payload), 100);
         
         return action;
 });

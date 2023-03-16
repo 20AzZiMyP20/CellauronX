@@ -7,10 +7,12 @@ const themeSetTheme = createSetAction(theme_setTheme);
 const themeSetProp = createSetAction(theme_setProp);
 const themeGetActivated = createGetAction(state => state.theme[state.theme.activated]);
 const themeActivate = createSetAction(theme_activate);
+const themeGetActivatedName = createGetAction(state => state.theme.activated);
 
 
 export {
    themeGetThemes, themeSetTheme,
    themeGetActivated,
    themeSetProp, themeActivate,
+   themeGetActivatedName,
 }

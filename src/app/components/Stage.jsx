@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import { StageEmitter } from '../../events/StageEmitter.js';
-import { conwayController } from '../../services/conway/ConwayController.js';
 import { conwayGenerator } from '../../services/conway/ConwayGenerator.js';
 import { keyBinder } from '../../services/KeyBinder.js';
 import { conwayGetStatus, conwaySetStatus } from '../../store/actions/conwayAction.js';
@@ -10,7 +9,7 @@ export default function Stage() {
 
     const bindKeys = () => {
         keyBinder.setAction("conwaySetStatus", document.body, (event) => {
-            if (event.target.id === "key_binder") return;
+            if (event.target.name === "key_binder") return;
 
             const status = conwayGetStatus();
 

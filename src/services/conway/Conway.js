@@ -83,7 +83,7 @@ class Conway {
         birthNeeded.forEach(cell => conwayController.birthCell(cell.x, cell.y));
         killNeeded.forEach(cell => conwayController.killCell(cell.x, cell.y));
         conwayIncrementStepCount();
-        //conwayController.cacheStep();
+        conwayController.cacheStep();
     }
 
 }

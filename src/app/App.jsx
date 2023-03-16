@@ -3,6 +3,7 @@ import Stage from "./components/Stage.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
 import ThemeManager from "../services/ThemeManager.js";
+import { keyBinder } from "../services/KeyBinder.js";
 
 function App(...props) {
     ThemeManager.activate("light");

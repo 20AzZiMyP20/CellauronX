@@ -12,10 +12,21 @@ export default function BindsList() {
         keyBinder.bindAction("conwaySetStatus", event.code);
         usePlayBind(event.code);
     };
+
+
+    const [toggleTheme, useToggleTheme] = useState("KeyT");
+    const toggleThemeBinder = useRef();
+
+    const changeTheme = (event) => {
+        keyBinder.unbindAction("toggleTheme");
+        keyBinder.bindAction("toggleTheme", event.code);
+        useToggleTheme(event.code);
+    }
     
     return (
         <List title="Binds" iconName="link-outline"> 
-            <Input ref={playBinder} id="key_binder" title="Play/Pause:" onKeyDown={changePlayBind} value={playBind}/>
+            <Input ref={playBinder} name="key_binder" title="Play:" onKeyDown={changePlayBind} value={playBind}/>
+            <Input ref={toggleThemeBinder} name="key_binder" title="Theme:" onKeyDown={changeTheme} value={toggleTheme} />
         </List>
     )
 }

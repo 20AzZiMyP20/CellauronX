@@ -15,6 +15,7 @@ const start = function () {
             preload: path.resolve(__dirname, "./preload.js"),
             nodeIntegration: true,
             contextIsolation: true,
+            devTools: false,
         },
     });
 

@@ -97,10 +97,17 @@ GridListeners.add(
     },
 
     function () {
-        cellGetSize(() => {
+        let prevCellSize = cellGetSize();
+
+        cellGetSize((cellSize) => {
+            this.offset.x *= prevCellSize / cellSize
+            this.offset.y *= prevCellSize / cellSize
+
             this.draw();
             this.centerBySelf();
             this.centerByScreen();
+
+            prevCellSize = cellSize
         }, this);
     },
 );
