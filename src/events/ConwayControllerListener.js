@@ -1,3 +1,4 @@
+import { keyBinder } from "../services/KeyBinder.js";
 import Cell from "../services/renderer/components/Cell.js";
 import { engine } from "../services/renderer/Engine.js";
 import CreateEventListener from "./CreateEventListener.js";
@@ -22,6 +23,14 @@ ConwayControllerListener.add(
         StageEmitter.on("stageload", (stage) => {
             engine.start();
         });
+    },
+    function () {
+        keyBinder.setAction("clearStage", document.body, (event) => {
+            if (event.target.tagName === "INPUT") return
+            this.clear();
+        });
+
+        keyBinder.bindAction("clearStage", "KeyC")
     }
 );
 

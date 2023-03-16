@@ -9,7 +9,7 @@ export default function Stage() {
 
     const bindKeys = () => {
         keyBinder.setAction("conwaySetStatus", document.body, (event) => {
-            if (event.target.name === "key_binder") return;
+            if (event.target.tagName === "INPUT") return
 
             const status = conwayGetStatus();
 

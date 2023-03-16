@@ -39,23 +39,23 @@ export default function OptionsList() {
     const bindKeys = () => {
         keyBinder.setAction("incrementStepCount", stepCounter.current, incrementStepCount);
         keyBinder.setAction("decrementStepCount", stepCounter.current, decrementStepCount);
-        keyBinder.bindAction("incrementStepCount", "ArrowUp");
-        keyBinder.bindAction("decrementStepCount", "ArrowDown");
+        keyBinder.bindAction("incrementStepCount", "ArrowUp", true);
+        keyBinder.bindAction("decrementStepCount", "ArrowDown", true);
 
         keyBinder.setAction("incrementCellSize", cellSize.current, incrementCellSize);
         keyBinder.setAction("decrementCellSize", cellSize.current, decrementCellSize);
-        keyBinder.bindAction("incrementCellSize", "ArrowUp");
-        keyBinder.bindAction("decrementCellSize", "ArrowDown");
+        keyBinder.bindAction("incrementCellSize", "ArrowUp", true);
+        keyBinder.bindAction("decrementCellSize", "ArrowDown", true);
 
         keyBinder.setAction("incrementGridWidth", gridWidth.current, incrementGridWidth);
         keyBinder.setAction("decrementGridWidth", gridWidth.current, decrementGridWidth);
-        keyBinder.bindAction("incrementGridWidth", "ArrowUp");
-        keyBinder.bindAction("decrementGridWidth", "ArrowDown");
+        keyBinder.bindAction("incrementGridWidth", "ArrowUp", true);
+        keyBinder.bindAction("decrementGridWidth", "ArrowDown", true);
 
         keyBinder.setAction("incrementConwaySpeed", conwaySpeed.current, incrementConwaySpeed);
         keyBinder.setAction("decrementConwaySpeed", conwaySpeed.current, decrementConwaySpeed);
-        keyBinder.bindAction("incrementConwaySpeed", "ArrowUp");
-        keyBinder.bindAction("decrementConwaySpeed", "ArrowDown");
+        keyBinder.bindAction("incrementConwaySpeed", "ArrowUp", true);
+        keyBinder.bindAction("decrementConwaySpeed", "ArrowDown", true);
     }
 
     useEffect(bindKeys, []);

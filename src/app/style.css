@@ -14,8 +14,8 @@ html {
 }
 
 body {
+    background-color: var(--main-color);
     overflow: hidden;
-    
 }
 
 #root {

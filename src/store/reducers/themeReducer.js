@@ -5,7 +5,7 @@ export const theme_setProp = createAction("theme/set-prop");
 export const theme_activate = createAction("theme/activate-theme");
 
 const preloadState = {
-    activated: "light",
+    activated: localStorage.getItem("activeTheme") || "light",
 
     light: {
         "--main-color": "#ffffff",

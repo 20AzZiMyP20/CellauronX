@@ -14,7 +14,7 @@ function ThemeToggle() {
 
     const bindKeys = () => {
         keyBinder.setAction("toggleTheme", document.body, (event) => {
-            if (event.target.name === "key_binder") return;
+            if (event.target.tagName === "INPUT") return
             click();
         });
         keyBinder.bindAction("toggleTheme", "KeyT");

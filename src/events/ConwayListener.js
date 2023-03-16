@@ -22,6 +22,6 @@ ConwayListener.add(
             conwayGetSpeed(speed => status === "plays" ? play(speed) : pause(), (unsubscribe) => speedUnsubscribe = unsubscribe);
 
         }, this);
-    }
+    },
 );
 export default ConwayListener;
