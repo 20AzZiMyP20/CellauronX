@@ -6,8 +6,8 @@
   "scripts": {
     "build:dev": "webpack --config ./webpack.preload.js && webpack --config ./webpack.main.js && webpack --config ./webpack.renderer.js",
     "build:rel": "webpack --config ./webpack.preload.js --mode=production && webpack --config ./webpack.main.js --mode=production && webpack --config ./webpack.renderer.js --mode=production",
-    "pack:win32": "npm run build:rel && electron-packager ./app Cellauron --platform=win32 --out=./built --overwrite",
     "pack:win64": "npm run build:rel && electron-packager ./app Cellauron --platform=win32 --arch=x64 --out=./built --overwrite",
+    "pack:all": "npm run build:rel && electron-packager ./app Cellauron --all --out=./built",
     "dev": "npm run build:dev && electron ./app/main.js"
   },
   "repository": {
